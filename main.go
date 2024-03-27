@@ -1,17 +1,19 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
-	router := mux.NewRouter()
-	router.HandleFunc("/RouterFunction", RouterFunction).Methods("GET")
+	routers := mux.NewRouter()
+	routers.HandleFunc("/router", RouterFunction).Methods("GET")
 	fmt.Println("server starting at port :9090")
-	if err := http.ListenAndServe(":9090", nil); err == nil {
+	if err := http.ListenAndServe(":9090", routers); err == nil {
 		fmt.Println("server starts at port :9090")
 	} else {
 		fmt.Println("Error := ", err.Error())
@@ -20,31 +22,36 @@ func main() {
 }
 
 func RouterFunction(h http.ResponseWriter, r *http.Request) {
-
-	// done := make(chan bool) // Create a channel to signal when goroutine is done
-
 	func() {
-		fmt.Println("****************Printing the first function********************")
+		fmt.Println("****************Printing the 1 function********************")
+	}()
+	func() {
+		fmt.Println("****************Printing the 2 function********************")
+	}()
+	func() {
+		fmt.Println("****************Printing the 3 function********************")
+	}()
+	func() {
+		fmt.Println("****************Printing the 4 function********************")
+	}()
+	func() {
+		fmt.Println("****************Printing the 5 function********************")
 	}()
 
-	Function3()
+	go Function3()
 
 	func() {
 		fmt.Println("****************Printing the second function*******************")
 	}()
 
-	h.Write([]byte("welcome to the chi"))
-
-	// <-done
-
+	h.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(h).Encode("Api Executed Successfully")
 }
 
 func Function3() {
-	// for i := 1000; i < 1100; i++ {
-	// 	fmt.Printf("Function 3 : %d\n", i)
-	// }
 	i := 5
-	if i == 5 {
+	for i == 5 {
+		time.Sleep(1 * time.Second)
 		fmt.Printf("Function 3 : %d\n", i)
 	}
 	// done <- true // Signal that the goroutine is done
