@@ -13,10 +13,8 @@ func main() {
 	routers := mux.NewRouter()
 	routers.HandleFunc("/router", RouterFunction).Methods("GET")
 	fmt.Println("server starting at port :9090")
-	if err := http.ListenAndServe(":9090", routers); err == nil {
-		fmt.Println("server starts at port :9090")
-	} else {
-		fmt.Println("Error := ", err.Error())
+	if err := http.ListenAndServe(":9090", routers); err != nil {
+		fmt.Fatal("Error := ", err.Error())
 	}
 
 }
