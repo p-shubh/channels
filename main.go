@@ -33,7 +33,7 @@ func RouterFunction(h http.ResponseWriter, r *http.Request) {
 		fmt.Println("****************Printing the 4 function********************")
 	}()
 	func() {
-		fmt.Println("****************Printing the 5 function********************")
+		fmt.Println("****************Printing the 50 function********************")
 	}()
 
 	go Function3()
